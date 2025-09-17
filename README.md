@@ -1,35 +1,33 @@
-# ML Chatbot - Hosting Guide
+# 🤖 Machine Learning Chatbot
 
-This repository contains a simple Machine Learning chatbot that can be hosted on GitHub Pages for easy sharing.
+A chatbot built as part of our **Machine Learning course project**.  
+It can answer questions related to **machine learning concepts, algorithms, and applications** using a lightweight Flask backend and a simple web UI.
 
-## How to Host on GitHub Pages
+---
 
-1. Create a GitHub account if you don't have one already (https://github.com/signup)
-2. Create a new repository on GitHub
-3. Upload the following files to your repository:
-   - `ultra_simple_ml_chat.html` (rename to `index.html`)
-   - `share_ml_chatbot.html`
-4. Go to your repository settings
-5. Scroll down to the "GitHub Pages" section
-6. Under "Source", select "main" branch
-7. Click "Save"
-8. Your chatbot will be available at: `https://[your-username].github.io/[repository-name]/`
+## 📌 Features
+- Understands and responds to ML-related questions.
+- Detects whether a query is ML-related or not.
+- Provides quick, context-aware answers.
+- Web-based chat interface (HTML/CSS/JS).
+- Deployable on **Netlify, GitHub Pages, or any Flask-compatible server**.
 
-## Alternative Hosting Options
+---
 
-If you prefer not to use GitHub Pages, you can also host the chatbot on:
+## 🛠️ Tech Stack
+- **Python 3.9+**
+- **Flask** & **Flask-CORS**
+- **Transformers** + **Torch**
+- **scikit-learn**, **nltk**
+- Frontend: HTML, CSS, JavaScript
 
-- **Netlify**: Drag and drop the HTML files to https://app.netlify.com/
-- **Vercel**: Connect your GitHub repository to https://vercel.com/
-- **Firebase Hosting**: Use Firebase to host your static site
+See [`requirements.txt`](requirements.txt) for full dependencies:contentReference[oaicite:1]{index=1}.
 
-## Files Included
+---
 
-- `ultra_simple_ml_chat.html`: The main chatbot interface
-- `share_ml_chatbot.html`: Instructions for sharing the chatbot
-- `open_enhanced_chatbot.bat`: Batch file to open the chatbot locally
+## 🚀 Getting Started
 
-## Features
-- Simple, clean interface
-- No server required (runs entirely in the browser)
-- Works offline once loaded 
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/ml-chatbot.git
+cd ml-chatbot
