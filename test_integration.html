@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Chatbot - Integration Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #10a37f;
+            --primary-light: #1a7f64;
+            --primary-dark: #0d8c6d;
+            --secondary-color: #202123;
+            --background-color: #343541;
+            --chat-background: #444654;
+            --text-color: #ececf1;
+            --input-background: #40414f;
+            --border-color: #565869;
+            --success-color: #4CAF50;
+            --warning-color: #FFC107;
+            --gradient-start: #10a37f;
+            --gradient-end: #0d8c6d;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(16, 163, 127, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 163, 127, 0.05) 0%, transparent 20%);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--secondary-color);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+        }
+        
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        h1 i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .test-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--chat-background);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .test-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+        }
+        
+        .test-section h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .test-section h2 i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        button i {
+            margin-right: 8px;
+        }
+        
+        button:hover {
+            background: linear-gradient(to right, var(--gradient-end), var(--gradient-start));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--input-background);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 14px;
+            line-height: 1.5;
+            transition: all 0.3s;
+        }
+        
+        .success {
+            color: var(--success-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .success i {
+            margin-right: 8px;
+        }
+        
+        .warning {
+            color: var(--warning-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .warning i {
+            margin-right: 8px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .logo-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(16, 163, 127, 0.3);
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            color: #a9a9b3;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            color: #a9a9b3;
+            font-size: 12px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .test-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-tools"></i></div>
+            <div class="logo-text">ML Chatbot Integration Test</div>
+        </div>
+        <h1><i class="fas fa-cogs"></i> Integration Test Dashboard</h1>
+        
+        <div class="test-section">
+            <h2><i class="fas fa-sign-in-alt"></i> 1. Test Login Page</h2>
+            <button onclick="openLoginPage()"><i class="fas fa-external-link-alt"></i> Open Login Page</button>
+            <div class="result" id="loginResult">Click the button to open the login page</div>
+        </div>
+        
+        <div class="test-section">
+            <h2><i class="fas fa-user-check"></i> 2. Test Authentication</h2>
+            <button onclick="testAuthentication()"><i class="fas fa-key"></i> Test Authentication</button>
+            <div class="result" id="authResult">Click the button to test authentication</div>
+        </div>
+        
+        <div class="test-section">
+            <h2><i class="fas fa-robot"></i> 3. Test Main Chatbot</h2>
+            <button onclick="openMainChatbot()"><i class="fas fa-external-link-alt"></i> Open Main Chatbot</button>
+            <div class="result" id="chatbotResult">Click the button to open the main chatbot</div>
+        </div>
+        
+        <div class="test-section">
+            <h2><i class="fas fa-sign-out-alt"></i> 4. Test Logout</h2>
+            <button onclick="testLogout()"><i class="fas fa-power-off"></i> Test Logout</button>
+            <div class="result" id="logoutResult">Click the button to test logout</div>
+        </div>
+        
+        <div class="footer">
+            <p>This test page helps diagnose integration issues between the login page and main chatbot.</p>
+        </div>
+    </div>
+    
+    <script>
+        function openLoginPage() {
+            document.getElementById('loginResult').innerHTML = "<span class='warning'><i class='fas fa-spinner fa-spin'></i> Opening login page...</span>";
+            window.open('login.html', '_blank');
+            document.getElementById('loginResult').innerHTML = "<span class='success'><i class='fas fa-check-circle'></i> Login page opened in a new tab. Please check if it loads correctly.</span>";
+        }
+        
+        function testAuthentication() {
+            document.getElementById('authResult').innerHTML = "<span class='warning'><i class='fas fa-spinner fa-spin'></i> Testing authentication...</span>";
+            
+            // Clear any existing session
+            sessionStorage.removeItem('currentUser');
+            sessionStorage.removeItem('userId');
+            
+            // Create a test user
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            const testUsername = 'test_user_' + Date.now();
+            const testUserId = 'user_' + Date.now();
+            
+            users[testUsername] = {
+                id: testUserId,
+                password: 'test_password',
+                createdAt: new Date().toISOString()
+            };
+            
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Set the session
+            sessionStorage.setItem('currentUser', testUsername);
+            sessionStorage.setItem('userId', testUserId);
+            
+            document.getElementById('authResult').innerHTML = 
+                "<span class='success'><i class='fas fa-check-circle'></i> Authentication test completed.</span><br>" +
+                "Test user created: <strong>" + testUsername + "</strong><br>" +
+                "Session storage set with currentUser and userId.<br>" +
+                "You can now test the main chatbot.";
+        }
+        
+        function openMainChatbot() {
+            document.getElementById('chatbotResult').innerHTML = "<span class='warning'><i class='fas fa-spinner fa-spin'></i> Opening main chatbot...</span>";
+            window.open('index.html', '_blank');
+            document.getElementById('chatbotResult').innerHTML = 
+                "<span class='success'><i class='fas fa-check-circle'></i> Main chatbot opened in a new tab.</span><br>" +
+                "If you see 'Welcome, [username]!' at the top, authentication is working.<br>" +
+                "If you're redirected to the login page, there's an issue with the integration.";
+        }
+        
+        function testLogout() {
+            document.getElementById('logoutResult').innerHTML = "<span class='warning'><i class='fas fa-spinner fa-spin'></i> Testing logout...</span>";
+            
+            // Clear the session
+            sessionStorage.removeItem('currentUser');
+            sessionStorage.removeItem('userId');
+            
+            document.getElementById('logoutResult').innerHTML = 
+                "<span class='success'><i class='fas fa-check-circle'></i> Logout test completed.</span><br>" +
+                "Session storage cleared.<br>" +
+                "If you open the main chatbot now, you should be redirected to the login page.";
+        }
+    </script>
+</body>
+</html> 

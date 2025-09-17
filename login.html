@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Chatbot - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #10a37f;
+            --primary-light: #1a7f64;
+            --primary-dark: #0d8c6d;
+            --secondary-color: #202123;
+            --background-color: #343541;
+            --chat-background: #444654;
+            --text-color: #ececf1;
+            --input-background: #40414f;
+            --border-color: #565869;
+            --error-color: #f44336;
+            --gradient-start: #10a37f;
+            --gradient-end: #0d8c6d;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(16, 163, 127, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 163, 127, 0.05) 0%, transparent 20%);
+            background-attachment: fixed;
+        }
+        
+        .login-container {
+            background: var(--secondary-color);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        h1 i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-group i {
+            position: absolute;
+            left: 12px;
+            top: 40px;
+            color: #a9a9b3;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #a9a9b3;
+            font-size: 14px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-sizing: border-box;
+            background-color: var(--input-background);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(16, 163, 127, 0.2);
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:hover {
+            background: linear-gradient(to right, var(--gradient-end), var(--gradient-start));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+            padding: 10px;
+            background-color: rgba(244, 67, 54, 0.1);
+            border-radius: 6px;
+            font-size: 14px;
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 14px;
+            color: #a9a9b3;
+        }
+        
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .register-link a:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .logo-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(16, 163, 127, 0.3);
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            color: #a9a9b3;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #a9a9b3;
+            font-size: 14px;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .divider::before {
+            margin-right: 10px;
+        }
+        
+        .divider::after {
+            margin-left: 10px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+                margin: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-robot"></i></div>
+            <div class="logo-text">ML Chatbot</div>
+        </div>
+        <h1><i class="fas fa-user-circle"></i> Welcome Back</h1>
+        <form id="loginForm" onsubmit="return handleLogin(event)">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" name="username" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+            <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+            <div id="errorMessage" class="error-message"></div>
+            <div class="divider">or</div>
+            <div class="register-link">
+                Don't have an account? <a href="#" onclick="showRegisterForm()">Register</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Store users in localStorage (in a real app, this would be in a database)
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Clear previous error
+            errorMessage.style.display = 'none';
+            
+            if (users[username] && users[username].password === password) {
+                // Store user session
+                sessionStorage.setItem('currentUser', username);
+                sessionStorage.setItem('userId', users[username].id);
+                // Redirect to chatbot
+                window.location.href = 'index.html';
+            } else {
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Invalid username or password';
+            }
+            return false;
+        }
+
+        function showRegisterForm() {
+            const username = prompt('Enter username:');
+            if (!username) return;
+
+            if (users[username]) {
+                alert('Username already exists!');
+                return;
+            }
+
+            const password = prompt('Enter password:');
+            if (!password) return;
+
+            // Generate a unique user ID
+            const userId = 'user_' + Date.now();
+            
+            // Store user
+            users[username] = {
+                id: userId,
+                password: password,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            alert('Registration successful! Please login.');
+            
+            // Auto-fill the login form
+            document.getElementById('username').value = username;
+            document.getElementById('password').value = password;
+        }
+
+        // Check if user is already logged in
+        window.onload = function() {
+            console.log("Login page loaded");
+            if (sessionStorage.getItem('currentUser')) {
+                console.log("User already logged in, redirecting to index.html");
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html> 
